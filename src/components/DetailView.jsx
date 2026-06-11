@@ -214,17 +214,63 @@ export default function DetailView({
         }
         
         @media (max-width: 768px) {
+          .detail-container {
+            padding: 10px;
+            min-height: auto;
+          }
+          .detail-card {
+            border-radius: 16px;
+          }
           .back-arrow-btn {
             position: relative;
             top: 0;
             left: 0;
             margin-bottom: 15px;
+            width: 100%;
+            text-align: center;
+          }
+          .detail-header {
+            padding: 25px 20px 15px 20px;
           }
           .detail-title {
-            font-size: 2rem;
+            font-size: 1.8rem;
+          }
+          .detail-badge-wrapper {
+            margin-top: 15px;
+            margin-bottom: 10px;
+          }
+          .detail-body {
+            padding: 20px;
+            font-size: 1rem;
+            line-height: 1.6;
+          }
+          .detail-intro {
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+          }
+          .detail-divider {
+            margin-bottom: 15px;
+          }
+          .detail-footer {
+            padding: 15px 20px;
+            flex-direction: column;
+            gap: 15px;
+            align-items: stretch;
+          }
+          .share-btn {
+            width: 100%;
+            text-align: center;
+          }
+          .footer-fun-fact {
+            text-align: center;
+          }
+          .suggestions-title {
+            font-size: 1.3rem;
+            margin-top: 25px;
           }
           .suggestions-grid {
             grid-template-columns: 1fr;
+            gap: 15px;
           }
         }
       `}</style>

@@ -86,21 +86,20 @@ export default function Header({
             {isPaused ? '▶️ Akışı Başlat' : '⏸️ Akışı Durdur'}
           </button>
 
-          {!isPaused && (
-            <div className="speed-control-wrapper">
-              <label htmlFor="speed-slider" className="speed-label">⚡ Hız: {speedMultiplier.toFixed(1)}x</label>
-              <input
-                id="speed-slider"
-                type="range"
-                min="0.2"
-                max="3.0"
-                step="0.1"
-                value={speedMultiplier}
-                onChange={(e) => setSpeedMultiplier(parseFloat(e.target.value))}
-                className="speed-slider"
-              />
-            </div>
-          )}
+          <div className={`speed-control-wrapper ${isPaused ? 'disabled' : ''}`}>
+            <label htmlFor="speed-slider" className="speed-label">⚡ Hız: {speedMultiplier.toFixed(1)}x</label>
+            <input
+              id="speed-slider"
+              type="range"
+              min="0.2"
+              max="3.0"
+              step="0.1"
+              value={speedMultiplier}
+              onChange={(e) => setSpeedMultiplier(parseFloat(e.target.value))}
+              className="speed-slider"
+              disabled={isPaused}
+            />
+          </div>
         </div>
       </div>
 
@@ -195,6 +194,14 @@ export default function Header({
           box-shadow: 3px 3px 0px 0px var(--color-shadow);
           width: 175px; /* Fixed width to prevent parent container shifting */
           justify-content: space-between;
+          transition: opacity 0.2s ease, background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .speed-control-wrapper.disabled {
+          opacity: 0.5;
+          pointer-events: none;
+          background-color: var(--color-gray);
+          box-shadow: 1px 1px 0px 0px var(--color-shadow);
+          transform: translate(2px, 2px);
         }
         .speed-label {
           font-family: var(--font-heading);
@@ -233,21 +240,69 @@ export default function Header({
         }
         @media (max-width: 768px) {
           .logo-title {
-            font-size: 2.2rem;
+            font-size: 2rem;
+            text-align: center;
+            width: 100%;
+          }
+          .logo-section {
+            justify-content: center;
+          }
+          .date-badge {
+            font-size: 0.95rem;
+            padding: 6px 12px;
           }
           .header-controls {
             flex-direction: column;
             align-items: stretch;
+            gap: 12px;
           }
           .search-wrapper {
             width: 100%;
           }
           .filters-wrapper {
-            justify-content: center;
+            flex-wrap: nowrap;
+            overflow-x: auto;
+            justify-content: flex-start;
+            width: calc(100% + 40px);
+            margin-left: -20px;
+            margin-right: -20px;
+            padding: 5px 20px 12px 20px;
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+          }
+          .filters-wrapper::-webkit-scrollbar {
+            display: none;
+          }
+          .filter-btn {
+            flex-shrink: 0;
+            padding: 6px 12px;
+            font-size: 0.85rem;
           }
           .animation-toggle-wrapper {
             display: flex;
-            justify-content: center;
+            justify-content: space-between;
+            width: 100%;
+            gap: 10px;
+          }
+          .pause-btn {
+            flex: 1;
+            font-size: 0.85rem;
+            padding: 8px 12px;
+            text-align: center;
+          }
+          .speed-control-wrapper {
+            flex: 1;
+            font-size: 0.85rem;
+            padding: 6px 10px;
+            width: auto;
+            justify-content: space-between;
+          }
+          .speed-slider {
+            flex: 1;
+            width: 100%;
+            max-width: 100px;
           }
         }
       `}</style>

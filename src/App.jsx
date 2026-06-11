@@ -300,6 +300,11 @@ function App() {
           color: var(--color-text);
         }
         @media (max-width: 768px) {
+          .loader-card, .error-card {
+            width: 100%;
+            max-width: 90%;
+            padding: 25px 20px;
+          }
           .hero-banner {
             flex-direction: column;
             text-align: center;

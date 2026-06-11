@@ -260,14 +260,21 @@ input[type="text"]:focus {
 
 /* Responsive styles */
 @media (max-width: 768px) {
-  .detail-header, .detail-body, .detail-footer {
-    padding: 20px;
+  .app-container {
+    padding: 10px;
   }
   .floating-card {
-    font-size: 0.9rem;
-    padding: 8px 12px;
+    font-size: 0.82rem;
+    padding: 6px 10px;
+    max-width: 160px;
+    white-space: normal;
+    word-break: break-word;
+    box-shadow: 3px 3px 0px 0px var(--color-shadow);
   }
   .canvas-wrapper {
-    height: 70vh;
+    height: 60vh;
+    min-height: 380px;
+    box-shadow: 4px 4px 0px 0px var(--color-shadow);
+    margin-top: 10px;
   }
 }

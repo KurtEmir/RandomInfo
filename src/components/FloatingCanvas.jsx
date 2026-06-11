@@ -12,6 +12,17 @@ export default function FloatingCanvas({
   const [cards, setCards] = useState([]);
   const requestRef = useRef(null);
   const previousTimeRef = useRef(null);
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Resize listener to track if viewport is mobile-sized
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
   
   // Use a Ref to keep speedMultiplier fresh in the animation loop
   const speedMultiplierRef = useRef(speedMultiplier);
@@ -144,10 +155,25 @@ export default function FloatingCanvas({
     return true;
   };
 
+  let visibleCount = 0;
+
   return (
     <div className="canvas-wrapper" ref={containerRef}>
       {cards.map(card => {
         const visible = isCardVisible(card);
+        let shouldRender = visible;
+
+        // If card is visible according to filters, check mobile limits
+        if (visible) {
+          if (isMobile) {
+            if (visibleCount < 18) {
+              visibleCount++;
+            } else {
+              shouldRender = false;
+            }
+          }
+        }
+
         const categoryColorMap = {
           tarih: 'bg-tarih',
           teknoloji: 'bg-teknoloji',
@@ -157,17 +183,21 @@ export default function FloatingCanvas({
           sanat: 'bg-sanat'
         };
 
+        const cardClass = `floating-card ${categoryColorMap[card.topic.category]} ` +
+          (!visible ? (isMobile ? 'hidden-card' : 'fade-out') : '') +
+          (!shouldRender ? ' hidden-card' : '');
+
         return (
           <div
             key={card.id}
-            className={`floating-card ${categoryColorMap[card.topic.category]} ${!visible ? 'fade-out' : ''}`}
+            className={cardClass}
             style={{
               left: `${card.x}%`,
               top: `${card.y}%`,
             }}
-            onMouseEnter={() => visible && setCardHover(card.id, true)}
+            onMouseEnter={() => shouldRender && setCardHover(card.id, true)}
             onMouseLeave={() => setCardHover(card.id, false)}
-            onClick={() => visible && onCardSelect(card.topic)}
+            onClick={() => shouldRender && onCardSelect(card.topic)}
           >
             <span className="card-category-indicator">
               {card.topic.category === 'tarih' && '📜'}
@@ -185,6 +215,9 @@ export default function FloatingCanvas({
       <style>{`
         .card-category-indicator {
           font-size: 0.95rem;
+        }
+        .hidden-card {
+          display: none !important;
         }
       `}</style>
     </div>
