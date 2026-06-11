@@ -186,10 +186,12 @@ input[type="text"]:focus {
 /* Detail View Layout */
 .detail-container {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   min-height: 80vh;
   padding: 20px 0;
+  width: 100%;
 }
 
 .detail-card {

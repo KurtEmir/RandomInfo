@@ -149,7 +149,7 @@ export default function DetailView({
           font-size: 1.2rem;
         }
         .detail-text {
-          text-align: justify;
+          text-align: left;
         }
         .share-btn {
           background-color: var(--color-white);
